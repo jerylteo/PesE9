@@ -1,0 +1,8 @@
+﻿  main.c
+C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Sandbox\Setup\Src\main.c(17,32): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Sandbox\Setup\Src\main.c(17,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  LINK : C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Sandbox\Setup\bin\Debug-x64\Setup.exe not found or not built by the last incremental link; performing full link
+  Setup.vcxproj -> C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Sandbox\Setup\bin\Debug-x64\Setup.exe
+  1 File(s) copied
+  1 File(s) copied
+  1 File(s) copied
