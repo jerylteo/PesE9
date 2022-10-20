@@ -3,8 +3,8 @@
 typedef struct recto {
 	float x;
 	float y;
-	int width;
-	int height;
+	float width;
+	float height;
 }rect;
 
 void Main_Menu_Init(void);

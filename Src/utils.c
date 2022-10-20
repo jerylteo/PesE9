@@ -1,13 +1,3 @@
-/*!
-@file       utils.c
-@author     Yeo Zhao Quan Xavier (z.yeo)
-@course     CSD-1401
-@section    CSD-1401-a
-@project	Car Select Game
-@date       29-09-2022
-@brief      This source file contains function definitions
-			for IsAreaClicked, IsCircleClicked and AngleToVector used in mainmenu.c and carlevel.c
-*/
 
 #include "cprocessing.h"
 #include "utils.h"
@@ -17,8 +7,8 @@
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
 	// mouse click in area in rect, return 1 if true
-	int left = area_center_x - area_width / 2.f, right = area_center_x + area_width / 2.f;
-	int top = area_center_y - area_height / 2.f, btm = area_center_y + area_height / 2.f;
+	float left = area_center_x - area_width / 2.f, right = area_center_x + area_width / 2.f;
+	float top = area_center_y - area_height / 2.f, btm = area_center_y + area_height / 2.f;
 	if (click_x >= left && click_x <= right && click_y >= top && click_y <= btm)  {
 		return 1;
 	}
@@ -46,6 +36,6 @@ CP_Vector AngleToVector(float radian_angle)
 	double x, y;
 	x = cos(radian_angle);
 	y = sin(radian_angle);
-	CP_Vector ret = CP_Vector_Set(x,y);
+	CP_Vector ret = CP_Vector_Set((float)x, (float)y);
     return ret;
 }
