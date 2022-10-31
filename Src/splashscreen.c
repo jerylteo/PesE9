@@ -37,10 +37,6 @@ void splash_screen_update(void)
 	{
 		CP_Engine_Terminate();
 	}
-
-	CP_Graphics_ClearBackground(CP_Color_Create(100, 100, 100, 255));
-	CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), 20.0f); //Get circle on mouse
-
 }
 
 void splash_screen_exit(void)

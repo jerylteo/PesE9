@@ -1,4 +1,3 @@
-
 #include "cprocessing.h"
 #include "utils.h"
 #include "mainmenu.h"

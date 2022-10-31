@@ -1,7 +1,7 @@
-
 #include "cprocessing.h"
 #include "utils.h"
 #include "mainmenu.h"
+#include "normal.h"
 
 rect start, end, tutorial;
 
@@ -37,7 +37,7 @@ void Main_Menu_Update()
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT))
     {
         if (IsAreaClicked(start.x, start.y, start.width, start.height,CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1) {
-            //CP_Engine_SetNextGameStateForced(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+            CP_Engine_SetNextGameStateForced(normal_init, normal_update, normal_exit);
         }
         if (IsAreaClicked(end.x, end.y, end.width, end.height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
         {
