@@ -1,49 +1,81 @@
+//---------------------------------------------------------
+// file:	mainmenu.c
+// author:	Low Jun Jie Gordon
+// email:	junjiegordon.low@digipen.edu
+//
+// brief:	Definition of functions for Main_Menu_Init(),
+//			Main_Menu_Update(), Main_Menu_Exit()
+//
+// documentation link:
+// https://github.com/DigiPen-Faculty/CProcessing/wiki
+//
+// Copyright © 2020 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "utils.h"
-#include "mainmenu.h"
-#include "normal.h"
-
-rect start, end, tutorial;
+#include "mode.h"
 
 void Main_Menu_Init()
 {
-    CP_System_Fullscreen();
-    CP_Settings_RectMode(CP_POSITION_CENTER);
+	//window size
+	CP_System_SetWindowSize(800, 600);
 }
 
 void Main_Menu_Update()
 {
-    start = (rect){ CP_System_GetWindowWidth() / 2.0f, CP_System_GetWindowHeight() / 2.0f, 200, 50 };
-    tutorial = (rect){ CP_System_GetWindowWidth() / 2.0f, CP_System_GetWindowHeight() / 2.0f + 100, 200, 50 };
-    end = (rect){ CP_System_GetWindowWidth() / 2.0f, CP_System_GetWindowHeight() / 2.0f + 200, 200, 50 };
+	//colors, width and height
+	CP_Color green_Color = CP_Color_Create(0, 255, 0, 255);
+	CP_Color red_Color = CP_Color_Create(255,0,0,255);
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	int center_x = CP_System_GetWindowWidth() / 2.0f;
+	int center_y = CP_System_GetWindowHeight() / 2.0f;
 
-    CP_Graphics_ClearBackground(CP_Color_Create(100, 100, 100, 255));
-
-    CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-    // Start button
-    CP_Graphics_DrawRect(start.x,start.y,start.width,start.height);
-    // Exit Button
-    CP_Graphics_DrawRect(end.x, end.y, end.width, end.height);
-    CP_Graphics_DrawRect(tutorial.x, tutorial.y, tutorial.width, tutorial.height);
-    CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-    //Setting Text Size, Colour and Alignment
-    CP_Settings_TextSize(20);
-    CP_Font_DrawText("Play", start.x, start.y);
-    CP_Font_DrawText("Exit", end.x, end.y);
-    CP_Font_DrawText("How to Play", tutorial.x, tutorial.y);
-    CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-
-    // For when left clicked is pressed
-    if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT))
-    {
-        if (IsAreaClicked(start.x, start.y, start.width, start.height,CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1) {
-            CP_Engine_SetNextGameStateForced(normal_init, normal_update, normal_exit);
-        }
-        if (IsAreaClicked(end.x, end.y, end.width, end.height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
-        {
-            CP_Engine_Terminate();
-        }
-    }
+	//menu buttons in the center
+	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Graphics_DrawRect(center_x, (center_y - 180), 150, 50); //play
+	CP_Graphics_DrawRect(center_x, (center_y - 60), 150, 50); //how to play
+	CP_Graphics_DrawRect(center_x, (center_y + 60), 150, 50); //credits
+	CP_Graphics_DrawRect(center_x, (center_y + 180), 150, 50); //exit
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+	CP_Font_DrawText("PLAY", center_x, (center_y - 180 ));
+	CP_Font_DrawText("HOW TO PLAY", center_x, (center_y - 60));
+	CP_Font_DrawText("CREDITS", center_x, (center_y + 60));
+	CP_Font_DrawText("EXIT", center_x, (center_y + 180));
+	
+	if (CP_Input_MouseClicked())
+	{	//"PLAY" button is clicked
+		if (IsAreaClicked(center_x, (center_y - 180), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			CP_Settings_Fill(green_Color);
+			CP_Graphics_DrawRect(center_x, (center_y - 180), 150, 50);
+			CP_Font_DrawText("PLAY", center_x, (center_y - 180));
+			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
+		}
+		//"HOW TO PLAY" button is clicked
+		else if (IsAreaClicked(center_x, (center_y - 60), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			CP_Settings_Fill(green_Color);
+			CP_Graphics_DrawRect(center_x, (center_y - 60), 150, 50);
+			CP_Font_DrawText("HOW TO PLAY", center_x, (center_y - 60));
+		}
+		//"CREDITS" button is clicked
+		else if (IsAreaClicked(center_x, (center_y + 60), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			CP_Settings_Fill(green_Color);
+			CP_Graphics_DrawRect(center_x, (center_y + 60), 150, 50);
+			CP_Font_DrawText("CREDITS", center_x, (center_y + 60));
+		}
+		//"EXIT" button is clicked
+		else if (IsAreaClicked(center_x, (center_y + 180), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			CP_Settings_Fill(red_Color);
+			CP_Graphics_DrawRect(center_x, (center_y + 180), 150, 50);
+			CP_Font_DrawText("EXIT", center_x, (center_y - 180));
+			CP_Engine_Terminate();
+		}
+	}
 }
 
-void Main_Menu_Exit(){}
+void Main_Menu_Exit()
+{
+	
+}
