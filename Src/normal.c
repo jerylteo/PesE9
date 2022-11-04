@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "mainmenu.h"
 #include <stdlib.h>
-#include<stdio.h>
+#include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
 #define diameter 100
@@ -86,7 +86,7 @@ void normal_update(void)
 	else {
 		//Pause screen
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width - 400, height - 200);
+		CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width - 400.0f, height - 200.0f);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));
 		CP_Font_DrawText("Game Paused", width / 2.0f, height / 2.0f - 300);
 		CP_Graphics_DrawRect(width / 3.0f, height / 2.0f, 200, 100);

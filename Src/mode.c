@@ -15,6 +15,8 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "mainmenu.h"
+#include "normal.h"
+#include "hell.h"
 
 void Mode_Init()
 {
@@ -28,8 +30,8 @@ void Mode_Update()
 	CP_Color green_Color = CP_Color_Create(0, 255, 0, 255);
 	CP_Color red_Color = CP_Color_Create(255,0,0,255);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	int center_x = CP_System_GetWindowWidth() / 2.0f;
-	int center_y = CP_System_GetWindowHeight() / 2.0f;
+	float center_x = CP_System_GetWindowWidth() / 2.0f;
+	float center_y = CP_System_GetWindowHeight() / 2.0f;
 
 	//menu buttons in the center
 	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
@@ -51,6 +53,7 @@ void Mode_Update()
 			CP_Settings_Fill(green_Color);
 			CP_Graphics_DrawRect(center_x, (center_y - 180), 150, 50);
 			CP_Font_DrawText("NORMAL", center_x, (center_y - 180));
+			CP_Engine_SetNextGameState(normal_init, normal_update, normal_exit);
 		}
 		//"HARD" button is clicked
 		else if (IsAreaClicked(center_x, (center_y - 60), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
@@ -63,6 +66,7 @@ void Mode_Update()
 			CP_Settings_Fill(green_Color);
 			CP_Graphics_DrawRect(center_x, (center_y + 60), 150, 50);
 			CP_Font_DrawText("HELL", center_x, (center_y + 60));
+			CP_Engine_SetNextGameState(hell_init, hell_update, hell_exit);
 		}
 		//"BACK" button is clicked
 		else if (IsAreaClicked(center_x, (center_y + 180), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {

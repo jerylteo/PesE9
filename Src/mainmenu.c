@@ -19,7 +19,7 @@
 void Main_Menu_Init()
 {
 	//window size
-	CP_System_SetWindowSize(800, 600);
+	CP_System_SetWindowSize(1270, 800);
 }
 
 void Main_Menu_Update()
@@ -28,8 +28,8 @@ void Main_Menu_Update()
 	CP_Color green_Color = CP_Color_Create(0, 255, 0, 255);
 	CP_Color red_Color = CP_Color_Create(255,0,0,255);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	int center_x = CP_System_GetWindowWidth() / 2.0f;
-	int center_y = CP_System_GetWindowHeight() / 2.0f;
+	float center_x = CP_System_GetWindowWidth() / 2.0f;
+	float center_y = CP_System_GetWindowHeight() / 2.0f;
 
 	//menu buttons in the center
 	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
