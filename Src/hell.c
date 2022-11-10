@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#define diameter 100
+#define diameter CP_System_GetWindowHeight()/8.0f
 #define size 500
+#define width CP_System_GetWindowWidth()
+#define height CP_System_GetWindowHeight()
 
 int isPaused;
 clown clown_arr[size];
@@ -15,8 +17,6 @@ void hell_init(void)
 {
 	CP_System_Fullscreen();
 	//CP_System_SetWindowSize(1270, 800);
-	int width = CP_System_GetWindowWidth();
-	int height = CP_System_GetWindowHeight();
 	for (int i = 0; i < size; i++) {
 		clown_arr[i] = (clown){ CP_Random_RangeFloat(0 + (2 * diameter), (float)width - (2 * diameter)),
 			CP_Random_RangeFloat(0 + (2 * diameter), (float)height - (3 * diameter)),255 };
@@ -29,8 +29,6 @@ void hell_init(void)
 
 void hell_update(void)
 {
-	int width = CP_System_GetWindowWidth();
-	int height = CP_System_GetWindowHeight();
 	if (isPaused == 0) {
 		if (CP_Input_KeyDown(KEY_P)) {
 			isPaused = 1;
@@ -77,31 +75,12 @@ void hell_update(void)
 		}
 
 		else {
-			CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, 400, 300);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Game Ended", width / 2.0f, height / 2.0f);
-
+			endgamescreen();
 		}
 	}
-	else {
+	else if (isPaused == 1) {
 		//Pause screen
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width - 400.0f, height - 200.0f);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));
-		CP_Font_DrawText("Game Paused", width / 2.0f, height / 2.0f - 300);
-		CP_Graphics_DrawRect(width / 3.0f, height / 2.0f, 200, 100);
-		CP_Graphics_DrawRect(width / 3.0f * 2, height / 2.0f, 200, 100);
-		if (CP_Input_MouseClicked()) {
-			if (IsAreaClicked(width / 3.0f, height / 2.0f, 200, 200, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-				isPaused = 0;
-				printf("Resume\t");
-			}
-			if (IsAreaClicked(width / 3.0f * 2, height / 2.0f, 200, 200, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-				//go main menu
-				printf("Main menu");
-			}
-		}
-
+		isPaused = Pausescreen();
 	}
 	if (CP_Input_KeyDown(KEY_ESCAPE))
 	{

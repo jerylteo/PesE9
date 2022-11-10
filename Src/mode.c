@@ -15,8 +15,7 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "mainmenu.h"
-#include "normal.h"
-#include "hell.h"
+
 
 void Mode_Init()
 {
@@ -60,6 +59,8 @@ void Mode_Update()
 			CP_Settings_Fill(green_Color);
 			CP_Graphics_DrawRect(center_x, (center_y - 60), 150, 50);
 			CP_Font_DrawText("HARD", center_x, (center_y - 60));
+			CP_Engine_SetNextGameState(hard_init, hard_update, hard_exit);
+
 		}
 		//"HELL" button is clicked
 		else if (IsAreaClicked(center_x, (center_y + 60), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
