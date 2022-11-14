@@ -1,7 +1,6 @@
-﻿  utils.c
-C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\PES E9 git\PesE9\Src\utils.c(56,10): warning C4013: 'printf' undefined; assuming extern returning int
-C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\PES E9 git\PesE9\Src\utils.c(67): warning C4715: 'Pausescreen': not all control paths return a value
-  Setup.vcxproj -> C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\PES E9 git\PesE9\bin\Debug-x64\Setup.exe
+﻿  normal.c
+C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\Src\normal.c(64,6): warning C4020: 'drawclown': too many actual parameters
+  Setup.vcxproj -> C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\bin\Debug-x64\Setup.exe
   1 File(s) copied
   1 File(s) copied
   1 File(s) copied

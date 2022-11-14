@@ -18,9 +18,6 @@
     <ClCompile Include="Src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\hell.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\mainmenu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
     <ClCompile Include="Src\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Hard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\mainmenu.h">
@@ -52,9 +46,6 @@
     </ClInclude>
     <ClInclude Include="Src\utils.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hard.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

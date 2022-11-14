@@ -54,21 +54,6 @@ void Mode_Update()
 			CP_Font_DrawText("NORMAL", center_x, (center_y - 180));
 			CP_Engine_SetNextGameState(normal_init, normal_update, normal_exit);
 		}
-		//"HARD" button is clicked
-		else if (IsAreaClicked(center_x, (center_y - 60), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			CP_Settings_Fill(green_Color);
-			CP_Graphics_DrawRect(center_x, (center_y - 60), 150, 50);
-			CP_Font_DrawText("HARD", center_x, (center_y - 60));
-			CP_Engine_SetNextGameState(hard_init, hard_update, hard_exit);
-
-		}
-		//"HELL" button is clicked
-		else if (IsAreaClicked(center_x, (center_y + 60), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			CP_Settings_Fill(green_Color);
-			CP_Graphics_DrawRect(center_x, (center_y + 60), 150, 50);
-			CP_Font_DrawText("HELL", center_x, (center_y + 60));
-			CP_Engine_SetNextGameState(hell_init, hell_update, hell_exit);
-		}
 		//"BACK" button is clicked
 		else if (IsAreaClicked(center_x, (center_y + 180), 150, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Settings_Fill(red_Color);
