@@ -27,7 +27,7 @@ void Main_Menu_Init()
 	//CP_System_Fullscreen();
 	CP_System_SetWindowSize(1270, 800);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
-
+	CP_System_SetFrameRate(60);
 }
 
 void Main_Menu_Update()
@@ -47,15 +47,11 @@ void Main_Menu_Update()
 	drawbutton(htp.x, htp.y, htp.text);//how to play
 	drawbutton(credits.x, credits.y, credits.text);//credits
 	drawbutton(exit.x, exit.y, exit.text);//exit
-
-	if (CP_Input_KeyDown(KEY_ESCAPE)) {
-		CP_Engine_Terminate();
-	}
 	
 	if (CP_Input_MouseClicked())
 	{	//"PLAY" button is clicked
 		if (IsAreaClicked(play.x, play.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
+			CP_Engine_SetNextGameStateForced(Mode_Init, Mode_Update, Mode_Exit);
 		}
 		//"HOW TO PLAY" button is clicked
 		else if (IsAreaClicked(htp.x, htp.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {

@@ -12,6 +12,8 @@
 int isPaused;
 clown clown_arr[size];
 
+float totalElapsedTime;
+
 void normal_init(void)
 {
 	CP_System_Fullscreen();
@@ -23,6 +25,7 @@ void normal_init(void)
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_System_SetFrameRate(60);
 
+	totalElapsedTime = 0;
 	isPaused = 0;
 }
 
@@ -34,9 +37,9 @@ void normal_update(void)
 		}
 		CP_Graphics_ClearBackground(CP_Color_Create(200, 200, 200, 255));
 		float currentElapsedTime = CP_System_GetDt();
-		static float totalElapsedTime = 0;
+		
 		totalElapsedTime += currentElapsedTime;
-		printf("%f\n", totalElapsedTime);
+		printf("%f\n",totalElapsedTime);
 
 		if (totalElapsedTime <= 5 && totalElapsedTime >= 0) {
 

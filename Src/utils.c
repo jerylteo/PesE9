@@ -52,11 +52,11 @@ int Pausescreen(void) {
 	if (CP_Input_MouseClicked()) {
 		if (IsAreaClicked(width / 3.0f, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			return 0;
-			printf("Resume\t");
+			//printf("Resume\t");
 		}
 		if (IsAreaClicked(width / 3.0f * 2, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
-			printf("Main menu");
+			//printf("Main menu");
 		}
 		
 	}
@@ -79,7 +79,7 @@ void endgamescreen(void) {
 		}
 		if (IsAreaClicked(width / 3.0f * 2, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
-			printf("Main menu");
+			//printf("Main menu");
 		}
 
 	}

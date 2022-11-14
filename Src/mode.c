@@ -19,7 +19,8 @@
 void Mode_Init()
 {
 	//window size
-	CP_System_SetWindowSize(800, 600);
+	//CP_System_Fullscreen();
+	CP_System_SetWindowSize(1270, 800);
 }
 
 void Mode_Update()
@@ -73,7 +74,7 @@ void Mode_Update()
 			CP_Settings_Fill(red_Color);
 			CP_Graphics_DrawRect(center_x, (center_y + 180), 150, 50);
 			CP_Font_DrawText("BACK", center_x, (center_y - 180));
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			CP_Engine_SetNextGameStateForced(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 	}
 }
