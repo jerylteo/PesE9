@@ -1,8 +1,5 @@
 #include "cprocessing.h"
-#include "mainmenu.h"
-#include "splashscreen.h"
 #include "utils.h"
-#include "mode.h"
 
 int main(void)
 {

@@ -1,11 +1,10 @@
 #include "cprocessing.h"
 #include "utils.h"
-#include "mainmenu.h"
 #include <math.h>
-#include "mode.h" 
 #define width CP_System_GetWindowWidth()
 #define height CP_System_GetWindowHeight()
-
+#define button_width CP_System_GetWindowWidth() / 9.0f
+#define button_height CP_System_GetWindowHeight() / 15.0f
 
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
@@ -89,4 +88,12 @@ void endgamescreen(void) {
 void drawclown(float x, float y, float dia, int trans) {
 	CP_Settings_Fill(CP_Color_Create(138, 43, 226, trans));
 	CP_Graphics_DrawCircle(x, y, dia);
+}
+
+void drawbutton(float x, float y, char* text) {
+	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
+	CP_Graphics_DrawRect(x, y,button_width,button_height);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);	
+	CP_Font_DrawText(text, x, y);
 }
