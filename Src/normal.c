@@ -60,8 +60,7 @@ void normal_update(void)
 					game.clown_arr[i].x, 
 					game.clown_arr[i].y, 
 					diameter, 
-					game.clown_arr[i].trans,
-					ACTIVE
+					game.clown_arr[i].trans
 					);
 			}
 

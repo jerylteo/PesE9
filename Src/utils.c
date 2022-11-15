@@ -62,12 +62,10 @@ int Pausescreen(void) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			// exit
 			printf("Main menu");
-			return 1;
 		}
 	}
-	else {
-		return 1;
-	}
+
+	return 1;
 }
 
 void endgamescreen(void) {
@@ -90,8 +88,10 @@ void endgamescreen(void) {
 	}
 }
 
-void drawclown(float x, float y, float dia, int trans) {
+void drawclown(float x, float y, float dia, int trans, bool fake) {
 	CP_Settings_NoStroke();
-	CP_Settings_Fill(CP_Color_Create(138, 43, 226, trans));
+	if (!fake) CP_Settings_Fill(CP_Color_Create(138, 43, 226, trans));
+	else CP_Settings_Fill(CP_Color_Create(226, 43, 138, trans));
+	
 	CP_Graphics_DrawCircle(x, y, dia);
 }

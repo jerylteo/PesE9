@@ -1,5 +1,7 @@
-﻿  normal.c
-C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\Src\normal.c(64,6): warning C4020: 'drawclown': too many actual parameters
+﻿  hell.c
+C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\Src\hell.c(81,81): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\Src\hell.c(81,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\Src\hell.c(92,23): warning C4020: 'drawclown': too many actual parameters
   Setup.vcxproj -> C:\Users\klmch\iCloudDrive\Documents\SIT\CSD 1401-a (Software Engineering Project 1)\Project\PesE9\bin\Debug-x64\Setup.exe
   1 File(s) copied
   1 File(s) copied

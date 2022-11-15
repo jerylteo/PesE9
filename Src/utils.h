@@ -25,7 +25,7 @@ typedef enum {
 	KILLED,
 	ALIVE,
 	INACTIVE,
-	ACTIVE
+	ACTIVE,
 } CLOWN_STATE;
 
 // structs
@@ -34,14 +34,21 @@ typedef struct {
 	float y;
 	int trans;
 	CLOWN_STATE state;
+	float angle;
+	bool fake;
 } CLOWN;
 
 typedef struct {
 	int isPaused;
 	float totalElapsedTime;
-	CLOWN clown_arr[30];
+	CLOWN clown_arr[100];
 	float center_hor;
 	float center_ver;
+	int speed;
+	int total_clicks;
+	int total_killed;
+	float accuracy;
+	int life;
 } GAME;
 
 

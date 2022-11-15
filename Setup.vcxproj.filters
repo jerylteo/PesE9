@@ -33,6 +33,9 @@
     <ClCompile Include="Src\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\hell.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\mainmenu.h">
