@@ -14,12 +14,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-#define red CP_Color_Create(255, 0, 0, 255)
-#define green CP_Color_Create(0, 255, 0, 255)
-#define button_width CP_System_GetWindowWidth() / 9.f
-#define button_height CP_System_GetWindowHeight() / 15.f
-
-button play,htp,credits,exit;
+button play,htp,credits,quit;
 
 void Main_Menu_Init()
 {
@@ -28,26 +23,31 @@ void Main_Menu_Init()
 	CP_System_SetWindowSize(1270, 800);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_System_SetFrameRate(60);
+
+
 }
 
 void Main_Menu_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	float center_x = CP_System_GetWindowWidth() / 2.f;
-	float center_y = CP_System_GetWindowHeight() / 2.f;
+
+	float center_x = width / 2.f;
+	float center_y = height / 2.f;
 
 	play = (button){ center_x, center_y - (center_y / 10 * 3), "PLAY" };
 	htp = (button){ center_x, center_y - (center_y / 10), "HOW TO PLAY" };
 	credits = (button){ center_x, center_y + (center_y / 10), "CREDITS" };
-	exit = (button){ center_x, center_y + (center_y / 10 * 3), "EXIT" };
+	quit = (button){ center_x, center_y + (center_y / 10 * 3), "EXIT" };
 
 	//menu buttons in the center
 	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
 	drawbutton(play.x, play.y, play.text);//play
 	drawbutton(htp.x, htp.y, htp.text);//how to play
 	drawbutton(credits.x, credits.y, credits.text);//credits
-	drawbutton(exit.x, exit.y, exit.text);//exit
-	
+	drawbutton(quit.x, quit.y, quit.text);//exit
+
+	CP_Graphics_DrawRect(width / 0.2f, height / 0.2f - (height / 10.0f * 3.0f), button_width,button_height);
+
 	if (CP_Input_MouseClicked())
 	{	//"PLAY" button is clicked
 		if (IsAreaClicked(play.x, play.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
@@ -60,7 +60,7 @@ void Main_Menu_Update()
 		else if (IsAreaClicked(credits.x, credits.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())){
 		}
 		//"EXIT" button is clicked
-		else if (IsAreaClicked(exit.x, exit.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		else if (IsAreaClicked(quit.x, quit.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			/*drawbutton(exit.x, exit.y, exit.text);*/
 			CP_Engine_Terminate();
 		}
