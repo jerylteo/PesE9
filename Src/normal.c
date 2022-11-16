@@ -16,8 +16,8 @@ float totalElapsedTime;
 
 void normal_init(void)
 {
-	CP_System_Fullscreen();
-	//CP_System_SetWindowSize(1270, 800);
+	//CP_System_Fullscreen();
+	CP_System_SetWindowSize(1270, 800);
 	for (int i = 0; i < size; i++) {
 		clown_arr[i] = (clown){ CP_Random_RangeFloat(0 + (2 * diameter), (float)width - (2 * diameter)),
 			CP_Random_RangeFloat(0 + (2 * diameter), (float)height - (3 * diameter)),255 };

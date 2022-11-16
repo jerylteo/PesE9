@@ -1,10 +1,10 @@
 #include "cprocessing.h"
 #include "utils.h"
-//#include "mainmenu.h"
 #include <math.h>
-//#include "mode.h" 
 #define width CP_System_GetWindowWidth()
 #define height CP_System_GetWindowHeight()
+#define button_width CP_System_GetWindowWidth() / 9.f
+#define button_height CP_System_GetWindowHeight() / 15.f
 
 
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
@@ -53,11 +53,11 @@ int Pausescreen(void) {
 	if (CP_Input_MouseClicked()) {
 		if (IsAreaClicked(width / 3.0f, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			return 0;
-			printf("Resume\t");
+			//printf("Resume\t");
 		}
 		if (IsAreaClicked(width / 3.0f * 2, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			//CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
-			printf("Main menu");
+			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			//printf("Main menu");
 		}
 		
 	}
@@ -75,11 +75,11 @@ void endgamescreen(void) {
 	CP_Graphics_DrawRect(width / 3.0f * 2, height / 2.0f, width / 10.0f, height / 15.0f);
 	if (CP_Input_MouseClicked()) {
 		if (IsAreaClicked(width / 3.0f, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			//CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
+			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
 
 		}
 		if (IsAreaClicked(width / 3.0f * 2, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			//CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			printf("Main menu");
 		}
 
@@ -89,4 +89,12 @@ void endgamescreen(void) {
 void drawclown(float x, float y, float dia, int trans) {
 	CP_Settings_Fill(CP_Color_Create(138, 43, 226, trans));
 	CP_Graphics_DrawCircle(x, y, dia);
+}
+
+void drawbutton(float x, float y, char* text) {
+	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
+	CP_Graphics_DrawRect(x, y, button_width, button_height);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Font_DrawText(text, x, y);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 }

@@ -16,8 +16,8 @@
 #include "utils.h"
 #define red CP_Color_Create(255, 0, 0, 255)
 #define green CP_Color_Create(0, 255, 0, 255)
-#define button_width CP_System_GetWindowWidth() / 9.0f
-#define button_height CP_System_GetWindowHeight() / 15.0f
+#define button_width CP_System_GetWindowWidth() / 9.f
+#define button_height CP_System_GetWindowHeight() / 15.f
 
 button play,htp,credits,exit;
 
@@ -33,8 +33,8 @@ void Main_Menu_Init()
 void Main_Menu_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	float center_x = CP_System_GetWindowWidth() / 2.0f;
-	float center_y = CP_System_GetWindowHeight() / 2.0f;
+	float center_x = CP_System_GetWindowWidth() / 2.f;
+	float center_y = CP_System_GetWindowHeight() / 2.f;
 
 	play = (button){ center_x, center_y - (center_y / 10 * 3), "PLAY" };
 	htp = (button){ center_x, center_y - (center_y / 10), "HOW TO PLAY" };
