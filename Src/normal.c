@@ -64,7 +64,7 @@ void normal_update(void)
 			float timer = game.totalElapsedTime - 5;
 			for (int i = 0; i + 5 < game.totalElapsedTime; i++) {
 
-				drawclown(game.clown_arr[i].x, game.clown_arr[i].y, diameter, game.clown_arr[i].trans);
+				drawclown(game.clown_arr[i].x, game.clown_arr[i].y, diameter, game.clown_arr[i].trans, true, false);
 				if (game.clown_arr[i].state == ACTIVE) {
 					game.clown_arr[i].time_up += currentElapsedTime;
 				}

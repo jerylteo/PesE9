@@ -132,6 +132,23 @@ void endgamescreen(float endscore, char* endgamestate) {
 
 	CP_Font_DrawTextBox(scoretext, get_center_hor(), get_center_ver(),width/3);
 
+	FILE* fp = fopen("Assets/highscore.txt", "a");
+	fprintf(fp, "%.0f", endscore);
+	//errno_t err;
+	//if (err = fopen(&fp, "Assets/highscore.txt", "a") != 0) {
+	//	printf("%s", "haha");
+	//}
+	//else {
+	//	// read highscore & print on screen
+	//	fprintf(fp, "%.0f", endscore);
+	//}
+
+
+	//if (fp) {
+	//	err = fclose(fp);
+	//}
+
+
 	if (CP_Input_MouseClicked()) {
 		if (IsAreaClicked(mode.x, mode.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
@@ -143,11 +160,15 @@ void endgamescreen(float endscore, char* endgamestate) {
 	}
 }
 
-void drawclown(float x, float y, float dia, int trans) {
+void drawclown(float x, float y, float dia, int trans, bool fake, bool super) {
 	CP_Settings_Fill(CP_Color_Create(138, 43, 226, 0));
 	CP_Settings_NoStroke();
 	CP_Graphics_DrawCircle(x, y, dia);
-	mos = CP_Image_Load("./Assets/mozz.PNG");
+	if (!fake) mos = CP_Image_Load("./Assets/mozz.PNG");
+	else mos = CP_Image_Load("./Assets/ladybug.png");
+
+	if (super) mos = CP_Image_Load("./Assets/cock.png");
+
 	CP_Image_Draw(mos, x, y, dia, dia, trans);
 }
 

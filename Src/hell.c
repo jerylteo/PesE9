@@ -1,104 +1,186 @@
-#include "cprocessing.h"
 #include "utils.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <stdbool.h>
 #define diameter CP_System_GetWindowHeight()/8.0f
-#define size 100
+#define SIZE 35
 
 GAME game;
+float temp[SIZE];
+bool super_spawned;
 
-void hell_init(void) {
+
+// game core functions
+void hell_init(void)
+{
 	//CP_System_Fullscreen();
-	CP_System_SetWindowSize(1270, 800);
-	for (int i = 0; i < size; i++) {
-
-		CLOWN clown = {
-			CP_Random_RangeFloat(0 + (2 * diameter), width - (2 * diameter)) ,
-			CP_Random_RangeFloat(0 + (2 * diameter), height - (3 * diameter)) ,
-			255,
-			INACTIVE
-		};
-
-		game.clown_arr[i] = clown;
-	}
-	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_System_SetWindowSize(1280, 720);
 	CP_System_SetFrameRate(60);
+	for (int i = 0; i < SIZE; i++) {
+		int rand = CP_Random_RangeInt(0, 9);
+		bool fake = FALSE;
+		bool super = FALSE;
+		if (!rand) fake = TRUE;
 
+		int rand2 = CP_Random_RangeInt(0, 3);
+		if (!rand2) super = TRUE;
+
+		
+		CLOWN clown = {
+			CP_Random_RangeFloat(2 * diameter, width - (2 * diameter)),
+			CP_Random_RangeFloat(2 * diameter, height - (3 * diameter)),
+			255,
+			ACTIVE,
+			0,
+			CP_Random_RangeFloat(0, 360),
+			fake,
+			super
+		};
+		game.clown_arr[i] = clown;
+		temp[i] = CP_Random_RangeFloat(1, 3);
+	}
+
+	CP_Settings_RectMode(CP_POSITION_CENTER);
 	game.totalElapsedTime = 0;
 	game.isPaused = 0;
-	//	game.score =0;
+	game.speed = 5;
+	game.total_clicks = 0;
+	game.total_killed = 0;
+	game.accuracy = 0;
+	game.life = 3;
+	super_spawned = FALSE;
 }
 
 void hell_update(void)
 {
+	// if game is running
 	if (game.isPaused == 0) {
-		if (CP_Input_KeyDown(KEY_P)) {
-			game.isPaused = 1;
-		}
-		CP_Graphics_ClearBackground(CP_Color_Create(200, 200, 200, 255));
+		if (CP_Input_KeyDown(KEY_P)) game.isPaused = 1;
+
+		CP_Graphics_ClearBackground(bg_gray);
 		float currentElapsedTime = CP_System_GetDt();
-
 		game.totalElapsedTime += currentElapsedTime;
-		printf("%f\n", game.totalElapsedTime);
 
-		if (game.totalElapsedTime <= 5 && game.totalElapsedTime >= 0) {
-
-			for (int i = 0, displaycountdown = 5; i <= game.totalElapsedTime; i++, displaycountdown--) {
-				float count = 5 - game.totalElapsedTime;
-				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-				CP_Settings_TextSize(250);
+		// 0 - 3 seconds
+		// countdown to game start
+		if (0 <= game.totalElapsedTime && game.totalElapsedTime <= 3) {
+			for (int i = 0; i <= game.totalElapsedTime; i++) {
+				float count = 3 - (float)game.totalElapsedTime;
+				CP_Settings_Fill(black);
+				CP_Settings_TextSize(100);
 				char countdown[50] = { 0 };
 				sprintf_s(countdown, _countof(countdown), "Game starting in %.0f...", count--);
-				CP_Font_DrawText(countdown, (float)width / 2, (float)height / 2);
+				CP_Font_DrawText(countdown, get_center_hor(), get_center_ver());
 				CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 			}
 		}
-		else if (game.totalElapsedTime <= 15 && game.totalElapsedTime >= 5) {
-			float timer = game.totalElapsedTime - 5;
-			for (int i = 0; i + 5 < game.totalElapsedTime; i++) {
-				if (CP_Input_MouseClicked()) {
-					if (IsCircleClicked(game.clown_arr[i].x, game.clown_arr[i].y, diameter, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-						game.clown_arr[i].trans = 0;
-						game.clown_arr[i].state = KILLED;
-						//printf("Clicked\t");
-					}
+		// 3 - 33 seconds
+		// game running
+		else if (3 <= game.totalElapsedTime && game.totalElapsedTime <= 33 && game.life > 0) {
+			int total_clicks = 0;
+			float accuracy = 0.0f;
+			float idx = game.totalElapsedTime - 3;
+
+			// spawn moving targets
+			for (int i = 0; i + 3 < game.totalElapsedTime; i++) {
+				if ((game.clown_arr[i].x < 0 + (diameter / 2.0f) && game.clown_arr[i].angle > 180 && game.clown_arr[i].angle < 270) ||
+					(game.clown_arr[i].x > width - (diameter / 2.0f) && game.clown_arr[i].angle < 90 && game.clown_arr[i].angle > 0) ||
+					(game.clown_arr[i].y < 0 + (diameter / 2.0f) && game.clown_arr[i].angle > 270 && game.clown_arr[i].angle < 360) ||
+					(game.clown_arr[i].y > height - (diameter / 2.0f) && game.clown_arr[i].angle > 90) && game.clown_arr[i].angle < 180) {
+					game.clown_arr[i].angle += 90;
 				}
-				CP_Settings_NoStroke();
-				drawclown(game.clown_arr[i].x, game.clown_arr[i].y, diameter, game.clown_arr[i].trans);
+				else if ((game.clown_arr[i].x < 0 + (diameter / 2.0f) && game.clown_arr[i].angle < 180 && game.clown_arr[i].angle > 90) ||
+					(game.clown_arr[i].x > width - (diameter / 2.0f) && game.clown_arr[i].angle > 270 && game.clown_arr[i].angle < 360) ||
+					(game.clown_arr[i].y < 0 + (diameter / 2.0f) && game.clown_arr[i].angle < 270 && game.clown_arr[i].angle > 180) ||
+					(game.clown_arr[i].y > height - (diameter / 2.0f) && game.clown_arr[i].angle < 90) && game.clown_arr[i].angle > 0) {
+					game.clown_arr[i].angle -= 90;
+				}
 
-				//Setting Text Size, Colour and Alignment
-				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-				CP_Settings_TextSize(50);
-				char time[50] = { 0 };
-				sprintf_s(time, _countof(time), "Timer : %.0f", timer);
-				CP_Font_DrawText(time, (float)width / 2, 50);
-				CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-				char score[50] = { 0 };
-				sprintf_s(time, _countof(time), "Score : %.0f", timer);
-				CP_Font_DrawText(time, (float)width / 4, 50);
+				if (game.clown_arr[i].angle > 360) game.clown_arr[i].angle -= 360;
+				if (game.clown_arr[i].angle < 0) game.clown_arr[i].angle += 360;
+				CP_Vector vector_angle = AngleToVector(CP_Math_Radians(abs(game.clown_arr[i].angle)));
 
+				//if (i <= 5) game.clown_arr[i].super = FALSE;
+				if (i == 15) game.clown_arr[i].super = TRUE;
+				game.clown_arr[i].x += (game.clown_arr[i].super) ? vector_angle.x * game.speed * 3 : vector_angle.x * game.speed;
+				game.clown_arr[i].y += (game.clown_arr[i].super) ? vector_angle.y * game.speed * 3 : vector_angle.y * game.speed;
 
+				//if (super_spawned) game.clown_arr[i].super = FALSE;
 
+				drawclown(
+					game.clown_arr[i].x,
+					game.clown_arr[i].y,
+					diameter / temp[i],
+					game.clown_arr[i].trans,
+					game.clown_arr[i].fake,
+					game.clown_arr[i].super
+				);
+				if (game.clown_arr[i].super) super_spawned = TRUE;
+				if (super_spawned) game.clown_arr[i + 1].super = FALSE;		// bad bad, very bad. no do but yes.!!!
 
-				//if (game.clown_arr[i].state == KILLED) {
-				//	game.score += 50;
-				//}
-
-
+				if (game.clown_arr[i].state == ACTIVE) {
+					game.clown_arr[i].time_up += currentElapsedTime;
+				}
 			}
 
 
+			//checks if any spawned targets clicked
+			bool die = FALSE;
+			if (CP_Input_MouseClicked()) {
+				game.total_clicks += 1;
+				for (int i = 0; i < idx; i++) {
+					int multi = 1;
+					if (IsCircleClicked(
+						game.clown_arr[i].x,
+						game.clown_arr[i].y,
+						diameter / temp[i],
+						CP_Input_GetMouseX(),
+						CP_Input_GetMouseY()
+					) && game.clown_arr[i].state == ACTIVE) {
+						game.clown_arr[i].trans = 0;
+						if (game.clown_arr[i].fake && !game.clown_arr[i].super) die = TRUE;
+						else if (game.clown_arr[i].super) multi = 5;
+						else {
+							game.total_killed += 1;
+							game.score += (50 * (5 - game.clown_arr[i].time_up)) * multi;
+						}
+						multi = 1;
+						game.clown_arr[i].state = KILLED;
+					}
+					//else die = TRUE;
+				}
+			}
+			
+			// if no click
+			for (int i = 0; i < SIZE; i++) {
+				if (game.clown_arr[i].time_up >= 1.5 && game.clown_arr[i].state == ACTIVE && !game.clown_arr[i].fake && !game.clown_arr[i].super) {
+					game.clown_arr[i].trans = 0;
+					game.life -= 1;
+					game.clown_arr[i].state = TIMED_OUT;
+				}
+				else if (game.clown_arr[i].time_up > 1 && game.clown_arr[i].super) {
+					game.clown_arr[i].trans = 0;
+					game.clown_arr[i].state = TIMED_OUT;
+				}
+			}
 
+			// handle dead
+			if (die) game.life -= 1;
+			if (!game.life) endgamescreen(game.score, "LOSE");
+
+			// handle accuracy
+			game.accuracy = game.total_clicks > 0 ? ((float)game.total_killed / (float)game.total_clicks) * 100.0f : 0;
+
+
+			// print timer
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Settings_TextSize(50);
+
+			char time[100] = { 0 };
+			sprintf_s(time, _countof(time), "Timer : %.0f | Accuracy: %.1f | Score: %.0f | Life: %d/3", idx, game.accuracy, game.score, game.life);
+			CP_Font_DrawText(time, get_center_hor(), 50);
+			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 		}
-
-		else {
-
-			endgamescreen(213,"end");
-
-
-		}
+		else if (game.life <= 0) endgamescreen(game.score, "LOSE");
+		else endgamescreen(game.score, "end");
+		
 	}
 	else if (game.isPaused == 1) {
 		//Pause screen

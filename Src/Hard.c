@@ -14,15 +14,18 @@ void hard_init(void)
 {
 
 	background = CP_Image_Load("Assets/bg.png");
-	CP_System_Fullscreen();
-	//CP_System_SetWindowSize(1280, 720);
+	//CP_System_Fullscreen();
+	CP_System_SetWindowSize(1280, 720);
 	CP_System_SetFrameRate(60);
 	for (int i = 0; i < SIZE; i++) {
 		CLOWN clown = {
 			CP_Random_RangeFloat(0 + (2 * diameter), (float)width - (2 * diameter)),
 			CP_Random_RangeFloat(0 + (2 * diameter), (float)height - (3 * diameter)),
 			255,
-			ACTIVE
+			ACTIVE,
+			0,
+			0,
+			true
 		};
 		game.clown_arr[i].time_up = 0;
 		game.clown_arr[i] = clown;
@@ -78,7 +81,9 @@ void hard_update(void)
 					game.clown_arr[i].x,
 					game.clown_arr[i].y,
 					diameter / temp[i],
-					game.clown_arr[i].trans
+					game.clown_arr[i].trans,
+					true,
+					false
 					);
 				if (game.clown_arr[i].state == ACTIVE) {
 					game.clown_arr[i].time_up += currentElapsedTime;
