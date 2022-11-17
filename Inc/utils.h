@@ -5,7 +5,11 @@
 	#include <stdio.h>
 	#include <stdbool.h>
 	#include "cprocessing.h"
-CP_Image background, mos;
+
+
+	CP_Image title, background, mos;
+	CP_Image start_img, htp_img, credits_img, quit_img;
+	CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img;
 
 	#ifndef UTILS_H
 	#define UTILS_H
@@ -38,7 +42,6 @@ CP_Image background, mos;
 	typedef struct {
 		float x;
 		float y;
-		char* text;
 	}button;
 
 	typedef struct{
@@ -79,7 +82,7 @@ CP_Image background, mos;
 
 	int Pausescreen(void);
 
-	void endgamescreen(float endscore);
+	void endgamescreen(float endscore,char* endgamesate);
 
 	//normal mode
 	void normal_init(void);

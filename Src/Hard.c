@@ -13,9 +13,9 @@ float temp[SIZE];
 void hard_init(void)
 {
 
-	background = CP_Image_Load("./Assets/bg.png");
-	//CP_System_Fullscreen();
-	CP_System_SetWindowSize(1280, 720);
+	background = CP_Image_Load("Assets/bg.png");
+	CP_System_Fullscreen();
+	//CP_System_SetWindowSize(1280, 720);
 	CP_System_SetFrameRate(60);
 	for (int i = 0; i < SIZE; i++) {
 		CLOWN clown = {
@@ -95,10 +95,10 @@ void hard_update(void)
 						CP_Input_GetMouseX(),
 						CP_Input_GetMouseY())
 					 && game.clown_arr[i].state == ACTIVE) {
-						game.clown_arr[i].trans = 0;
-						game.total_killed += 1;
-						game.score += (50 * (5 - game.clown_arr[i].time_up));
-						game.clown_arr[i].state = KILLED;
+							game.clown_arr[i].trans = 0;
+							game.total_killed += 1;
+							game.score += (50 * (5 - game.clown_arr[i].time_up));
+							game.clown_arr[i].state = KILLED;
 					}
 				}
 			}
@@ -121,9 +121,13 @@ void hard_update(void)
 			CP_Font_DrawText(time, get_center_hor(), 50);
 			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 		}
+		else if (game.life <= 0) {
+			endgamescreen(game.score, "LOSE");
+
+		}
 		else {
 			//CP_Engine_SetNextGameState(End_Game_Init, End_Game_Update, End_Game_Exit);
-			endgamescreen(game.score);
+			endgamescreen(game.score,"end");
 		}
 	}
 	if (CP_Input_KeyTriggered(KEY_ESCAPE))

@@ -50,52 +50,98 @@ CP_Vector AngleToVector(float radian_angle)
 }
 
 int Pausescreen(void) {
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width /5.0f*4.0f, height / 5.0f * 4.0f);
+	button resume, main;
+
+	resume = (button){ width / 3.0f, height / 2.0f };
+	main = (button){ width / 3.0f * 2, height / 2.0f};
+
+	resume_img = CP_Image_Load("Assets/resumebutton.png");
+	main_img = CP_Image_Load("Assets/menubutton.png");
+	background = CP_Image_Load("Assets/bg.png");
+	//CP_Settings_ImageMode(CP_POSITION_CENTER);
+	//CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
+
+	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	//CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f);
+	/*drawbutton(resume.x, resume.y, resume.text);
+	drawbutton(main.x, main.y, main.text);*/
+
+	CP_Image_Draw(background, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
+	CP_Image_Draw(resume_img, resume.x, resume.y, button_width, button_height, 255);
+	CP_Image_Draw(main_img, main.x, main.y, button_width, button_height, 255);
+
 	CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));
+	CP_Settings_TextSize(50);
 	CP_Font_DrawText("Game Paused", width / 2.0f, height / 3.0f);
-	CP_Graphics_DrawRect(width / 3.0f, height / 2.0f, width / 10.0f, height/15.0f);
-	CP_Graphics_DrawRect(width / 3.0f * 2, height / 2.0f, width / 10.0f, height/15.0f);
-	if (CP_Input_MouseClicked()) {
-		if (IsAreaClicked(width / 3.0f, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+
+	if(CP_Input_KeyDown(KEY_R))return 0;
+
+	if (CP_Input_MouseClicked() ) {
+		if (IsAreaClicked(resume.x, resume.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) ) {
+			printf("Resume\t");
 			return 0;
-			//printf("Resume\t");
 		}
-		if (IsAreaClicked(width / 3.0f * 2, height / 2.0f, width / 10.0f, height / 15.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(main.x, main.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
-			//printf("Main menu");
+			printf("Main menu");
 		}
 		return 1;
 	}
 	else {
+		/*CP_Image_Free(&start_img);
+		CP_Image_Free(&back_img);
+		CP_Image_Free(&background);*/
 		return 1;
 	}
 }
 
-void endgamescreen(float endscore) {
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));
-	char scoretext[231123] = { 0 };
-	sprintf_s(scoretext, _countof(scoretext), "Game Ended\n\nScore : %.0f", endscore);
-	CP_Font_DrawText(scoretext, get_center_hor(), get_center_ver());
+void endgamescreen(float endscore, char* endgamestate) {
+	button mode, main;
+
+	mode = (button){ width / 3.0f, height / 3.0f * 2 };
+	main = (button){ width / 3.0f * 2, height / 3.0f * 2 };
+
+	quit_img = CP_Image_Load("Assets/exitbutton.png");
+	main_img = CP_Image_Load("Assets/menubutton.png");
+	background = CP_Image_Load("Assets/bg.png");
+	//CP_Settings_ImageMode(CP_POSITION_CENTER);
+	//CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
+
+	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	//CP_Graphics_DrawRect(width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f);
+	/*drawbutton(resume.x, resume.y, resume.text);
+	drawbutton(main.x, main.y, main.text);*/
+
+	CP_Image_Draw(background, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
+	CP_Image_Draw(quit_img, mode.x, mode.y, button_width, button_height, 255);
+	CP_Image_Draw(main_img, main.x, main.y, button_width, button_height, 255);
+
+	CP_Settings_Fill(CP_Color_Create(240, 128, 128, 255));
+	CP_Settings_TextSize(50);
+	char scoretext[10000] = { 0 };
+
+	if (endgamestate == "LOSE") {
+		sprintf_s(scoretext, _countof(scoretext), "You ran out of lives!\nScore : %.0f", endscore);
+	}
+	else {
+		sprintf_s(scoretext, _countof(scoretext), "Game Ended\nScore : %.0f", endscore);
+
+	}
+
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 
-	CP_Graphics_DrawRect(width / 3.0f, height / 3.0f *2.0f, button_width, button_height);
-	CP_Graphics_DrawRect(width / 3.0f * 2, height / 3.0f *2, button_width, button_height);
-	if (CP_Input_MouseClicked()) {
-		if (IsAreaClicked(width / 3.0f, height / 3.0f * 2.0f, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
+	CP_Font_DrawTextBox(scoretext, get_center_hor(), get_center_ver(),width/3);
 
+	if (CP_Input_MouseClicked()) {
+		if (IsAreaClicked(mode.x, mode.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
 		}
-		if (IsAreaClicked(width / 3.0f * 2, height / 3.0f * 2, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(main.x, main.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
-			printf("Main menu");
 		}
 
 	}
 }
-CP_Image mos;
 
 void drawclown(float x, float y, float dia, int trans) {
 	CP_Settings_Fill(CP_Color_Create(138, 43, 226, 0));
@@ -105,10 +151,6 @@ void drawclown(float x, float y, float dia, int trans) {
 	CP_Image_Draw(mos, x, y, dia, dia, trans);
 }
 
-void drawbutton(float x, float y, char* text) {
-	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
-	CP_Graphics_DrawRect(x, y, button_width, button_height);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText(text, x, y);
-	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-}
+//void drawbutton(float x, float y, CP_Image buttonimage) {
+//	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
+//}

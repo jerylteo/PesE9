@@ -95,7 +95,7 @@ void hell_update(void)
 
 		else {
 
-			endgamescreen(213);
+			endgamescreen(213,"end");
 
 
 		}

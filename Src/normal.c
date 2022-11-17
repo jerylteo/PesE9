@@ -11,7 +11,7 @@ GAME game;
 
 void normal_init(void){
 	//CP_System_Fullscreen();
-	background = CP_Image_Load("./Assets/bg.png");
+	//background = CP_Image_Load("/Assets/bg.png");
 
 	CP_System_SetWindowSize(1270, 800);
 	for (int i = 0; i < size; i++) {
@@ -83,7 +83,6 @@ void normal_update(void)
 					}
 				}
 
-
 				//Setting Text Size, Colour and Alignment
 				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 				CP_Settings_TextSize(50);
@@ -95,21 +94,12 @@ void normal_update(void)
 				sprintf_s(scoretext, _countof(scoretext), "Score : %.0f", game.score);
 				CP_Font_DrawText(scoretext, (float)width / 4, 50);
 
-
-
-
-
-
-
 			}
-
-			
-
 		}
 
 		else {
 
-			endgamescreen(game.score);
+			endgamescreen(game.score,"END");
 
 
 		}
