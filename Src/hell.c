@@ -4,7 +4,7 @@
 
 GAME game;
 float temp[SIZE];
-bool super_spawned;
+int super_time;
 
 
 // game core functions
@@ -14,13 +14,11 @@ void hell_init(void)
 	CP_System_SetWindowSize(1280, 720);
 	CP_System_SetFrameRate(60);
 	for (int i = 0; i < SIZE; i++) {
-		int rand = CP_Random_RangeInt(0, 9);
+		super_time = CP_Random_RangeInt(0, 29);
 		bool fake = FALSE;
-		bool super = FALSE;
-		if (!rand) fake = TRUE;
+		if (super_time == 0 || super_time == 9 || super_time == 19 || super_time == 29) fake = TRUE;
 
-		int rand2 = CP_Random_RangeInt(0, 3);
-		if (!rand2) super = TRUE;
+		
 
 		
 		CLOWN clown = {
@@ -31,7 +29,7 @@ void hell_init(void)
 			0,
 			CP_Random_RangeFloat(0, 360),
 			fake,
-			super
+			FALSE
 		};
 		game.clown_arr[i] = clown;
 		temp[i] = CP_Random_RangeFloat(1, 3);
@@ -40,12 +38,11 @@ void hell_init(void)
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	game.totalElapsedTime = 0;
 	game.isPaused = 0;
-	game.speed = 5;
+	//game.speed = 5;
 	game.total_clicks = 0;
 	game.total_killed = 0;
 	game.accuracy = 0;
 	game.life = 3;
-	super_spawned = FALSE;
 }
 
 void hell_update(void)
@@ -97,8 +94,8 @@ void hell_update(void)
 				if (game.clown_arr[i].angle < 0) game.clown_arr[i].angle += 360;
 				CP_Vector vector_angle = AngleToVector(CP_Math_Radians(abs(game.clown_arr[i].angle)));
 
-				//if (i <= 5) game.clown_arr[i].super = FALSE;
-				if (i == 15) game.clown_arr[i].super = TRUE;
+				if (i == super_time) game.clown_arr[i].super = TRUE;
+				game.speed = CP_Random_RangeInt(3, 7);
 				game.clown_arr[i].x += (game.clown_arr[i].super) ? vector_angle.x * game.speed * 3 : vector_angle.x * game.speed;
 				game.clown_arr[i].y += (game.clown_arr[i].super) ? vector_angle.y * game.speed * 3 : vector_angle.y * game.speed;
 
@@ -112,8 +109,6 @@ void hell_update(void)
 					game.clown_arr[i].fake,
 					game.clown_arr[i].super
 				);
-				if (game.clown_arr[i].super) super_spawned = TRUE;
-				if (super_spawned) game.clown_arr[i + 1].super = FALSE;		// bad bad, very bad. no do but yes.!!!
 
 				if (game.clown_arr[i].state == ACTIVE) {
 					game.clown_arr[i].time_up += currentElapsedTime;
