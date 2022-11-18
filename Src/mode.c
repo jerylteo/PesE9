@@ -20,8 +20,8 @@ button normal, hard, hell, back;
 void Mode_Init()
 {
 	//window size
-	//CP_System_Fullscreen();
-	CP_System_SetWindowSize(1270, 800);
+	CP_System_Fullscreen();
+	//CP_System_SetWindowSize(1270, 800);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_System_SetFrameRate(60);
 
@@ -30,6 +30,10 @@ void Mode_Init()
 	hard_img = CP_Image_Load("Assets/hardbutton.png");
 	hell_img = CP_Image_Load("Assets/hellbutton.png");
 	back_img = CP_Image_Load("Assets/backbutton.png");
+	normal_img2 = CP_Image_Load("Assets/normalbutton2.png");
+	hard_img2 = CP_Image_Load("Assets/hardbutton2.png");
+	hell_img2 = CP_Image_Load("Assets/hellbutton2.png");
+	back_img2 = CP_Image_Load("Assets/backbutton2.png");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 }
@@ -41,10 +45,10 @@ void Mode_Update()
 	float center_x = width / 2.0f;
 	float center_y = height / 2.0f;
 
-	normal = (button){ center_x, center_y - (center_y / 10 * 3) };
-	hard = (button){ center_x, center_y - (center_y / 10)};
-	hell = (button){ center_x, center_y + (center_y / 10) };
-	back = (button){ center_x, center_y + (center_y / 10 * 3) };
+	normal = (button){ center_x, center_y - button_height * 2.25 };
+	hard = (button){ center_x, center_y - button_height*0.75};
+	hell = (button){ center_x, center_y + button_height* 0.75};
+	back = (button){ center_x, center_y + button_height*2.25	 };
 
 	//menu buttons in the center
 	//menu buttons in the center
@@ -61,16 +65,16 @@ void Mode_Update()
 	CP_Image_Draw(back_img, back.x, back.y, button_width, button_height, 255);
 
 	if (IsAreaClicked(normal.x, normal.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1) {
-		CP_Image_Draw(normal_img, normal.x, normal.y, button_width, button_height, 255);
+		CP_Image_Draw(normal_img2, normal.x, normal.y, button_width, button_height, 255);
 	}
 	if (IsAreaClicked(hard.x, hard.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1) {
-		CP_Image_Draw(hard_img, hard.x, hard.y, button_width, button_height, 255);
+		CP_Image_Draw(hard_img2, hard.x, hard.y, button_width, button_height, 255);
 	}
 	if (IsAreaClicked(hell.x, hell.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1) {
-		CP_Image_Draw(hell_img, hell.x, hell.y, button_width, button_height, 255);
+		CP_Image_Draw(hell_img2, hell.x, hell.y, button_width, button_height, 255);
 	}
 	if (IsAreaClicked(back.x, back.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1) {
-		CP_Image_Draw(back_img, back.x, back.y, button_width, button_height, 255);
+		CP_Image_Draw(back_img2, back.x, back.y, button_width, button_height, 255);
 	}
 
 	if (CP_Input_MouseClicked())

@@ -6,7 +6,6 @@
 
 GAME game;
 
-float totalElapsedTime;
 float temp[SIZE];
 
 // game core functions
@@ -14,8 +13,8 @@ void hard_init(void)
 {
 
 	background = CP_Image_Load("Assets/bg.png");
-	//CP_System_Fullscreen();
-	CP_System_SetWindowSize(1280, 720);
+	CP_System_Fullscreen();
+	//CP_System_SetWindowSize(1280, 720);
 	CP_System_SetFrameRate(60);
 	for (int i = 0; i < SIZE; i++) {
 		CLOWN clown = {
@@ -25,13 +24,14 @@ void hard_init(void)
 			ACTIVE,
 			0,
 			0,
-			true
+			TRUE,
+			TRUE
 		};
 		game.clown_arr[i].time_up = 0;
 		game.clown_arr[i] = clown;
 		temp[i] = CP_Random_RangeFloat(1,3);
 	}
-	totalElapsedTime = 0;
+	game.totalElapsedTime = 0;
 	game.isPaused = 0;
 	game.total_clicks = 0;
 	game.total_killed = 0;
@@ -44,7 +44,7 @@ void hard_update(void)
 {		
 	CP_Image_Draw(background, width / 2, height / 2, width, height, 200);
 	if (CP_Input_KeyTriggered(KEY_P)) {
-		game.isPaused = !game.isPaused;	// toggle pause state
+		game.isPaused = 1;	
 	}
 	else if (game.isPaused == 1) {
 		//Pause screen
@@ -55,14 +55,14 @@ void hard_update(void)
 
 		CP_Graphics_ClearBackground(CP_Color_Create(110,110,110,255));
 		float currentElapsedTime = CP_System_GetDt();
-		totalElapsedTime += currentElapsedTime;
+		game.totalElapsedTime += currentElapsedTime;
 
 		// 0 - 4 seconds
 		// countdown to game start
-		if (0 <= totalElapsedTime && totalElapsedTime <= 3) {
-			for (int i = 0; i <= totalElapsedTime; i++) {
-				float count = 3 - (float)totalElapsedTime;
-				CP_Settings_Fill(CP_Color_Create(255,255,255,255));
+		if (0 <= game.totalElapsedTime && game.totalElapsedTime <= 3) {
+			for (int i = 0; i <= game.totalElapsedTime; i++) {
+				float count = 3 - (float)game.totalElapsedTime;
+				CP_Settings_Fill(fontcolor);
 				CP_Settings_TextSize(height/10);
 				char countdown[50] = { 0 };
 				sprintf_s(countdown, _countof(countdown), "Game starting in %.0f...", count--);
@@ -72,18 +72,18 @@ void hard_update(void)
 		}
 		// 3 - ?? seconds
 		// game running
-		else if (3 <= totalElapsedTime && totalElapsedTime <= (3 + game_timer) && game.life > 0) {
-			float idx = totalElapsedTime - 3;
+		else if (3 <= game.totalElapsedTime && game.totalElapsedTime <= (3 + game_timer) && game.life > 0) {
+			float idx = game.totalElapsedTime - 3;
 
 			//spawn circle every second
-			for (int i = 0; i + 3 < totalElapsedTime; i++) {
+			for (int i = 0; i + 3 < game.totalElapsedTime; i++) {
 				drawclown(
 					game.clown_arr[i].x,
 					game.clown_arr[i].y,
 					diameter / temp[i],
 					game.clown_arr[i].trans,
-					true,
-					false
+					FALSE,
+					FALSE
 					);
 				if (game.clown_arr[i].state == ACTIVE) {
 					game.clown_arr[i].time_up += currentElapsedTime;
@@ -115,10 +115,12 @@ void hard_update(void)
 					game.clown_arr[i].state = TIMED_OUT;
 				}
 			}
-
+			//if kill 2 bugs with 1 click
+			if (game.accuracy > 100)game.total_clicks--;
+			//calculate accuracy
 			game.accuracy = game.total_clicks > 0 ? ((float)game.total_killed / (float)game.total_clicks) * 100.0f : 0;
 			// print timer
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Settings_Fill(fontcolor);
 			CP_Settings_TextSize(50);
 
 			char time[100] = { 0 };

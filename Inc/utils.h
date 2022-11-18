@@ -8,15 +8,17 @@
 #include <errno.h>
 
 
-CP_Image title, background, mos;
-CP_Image start_img, htp_img, credits_img, quit_img;
-CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img;
+
+CP_Image title, background, mos, backscreen;
+CP_Image start_img, htp_img, credits_img, quit_img, start_img2, htp_img2, credits_img2, quit_img2;
+CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img, normal_img2, hard_img2, hell_img2, back_img2, resume_img2, main_img2;
+
 
 #ifndef UTILS_H
 #define UTILS_H
 
-#define button_width CP_System_GetWindowWidth() / 9.f
-#define button_height CP_System_GetWindowHeight() / 15.f
+#define button_width CP_System_GetWindowWidth() / 6.f
+#define button_height CP_System_GetWindowHeight() / 10.f
 
 #define width CP_System_GetWindowWidth()
 #define height CP_System_GetWindowHeight()
@@ -24,7 +26,9 @@ CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img;
 // colours
 #define black CP_Color_Create(0, 0, 0, 255)
 #define white CP_Color_Create(255, 255, 255, 255)
-#define bg_gray CP_Color_Create(200, 200, 200, 255)
+#define fontcolor CP_Color_Create(160, 82, 45, 255)
+
+int backgroundtrans;
 
 float get_center_hor(void);
 float get_center_ver(void);

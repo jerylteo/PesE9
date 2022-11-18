@@ -57,7 +57,10 @@ int Pausescreen(void) {
 
 	resume_img = CP_Image_Load("Assets/resumebutton.png");
 	main_img = CP_Image_Load("Assets/menubutton.png");
-	background = CP_Image_Load("Assets/bg.png");
+	backscreen = CP_Image_Load("Assets/backscreen2.png");
+	resume_img2 = CP_Image_Load("Assets/resumebutton2.png");
+	main_img2 = CP_Image_Load("Assets/menubutton2.png");
+
 	//CP_Settings_ImageMode(CP_POSITION_CENTER);
 	//CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 
@@ -66,22 +69,34 @@ int Pausescreen(void) {
 	/*drawbutton(resume.x, resume.y, resume.text);
 	drawbutton(main.x, main.y, main.text);*/
 
-	CP_Image_Draw(background, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
+	CP_Image_Draw(backscreen, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
 	CP_Image_Draw(resume_img, resume.x, resume.y, button_width, button_height, 255);
 	CP_Image_Draw(main_img, main.x, main.y, button_width, button_height, 255);
+	if (CP_Input_GetMouseX() >= resume.x - button_width / 2 &&
+		CP_Input_GetMouseX() <= resume.x + button_width / 2 &&
+		CP_Input_GetMouseY() <= resume.y + button_height / 2 &&
+		CP_Input_GetMouseY() >= resume.y - button_height / 2) {
+		CP_Image_Draw(resume_img2, resume.x, resume.y, button_width, button_height, 255);
+	}
+	if (CP_Input_GetMouseX() >= main.x - button_width / 2 &&
+		CP_Input_GetMouseX() <= main.x + button_width / 2 &&
+		CP_Input_GetMouseY() <= main.y + button_height / 2 &&
+		CP_Input_GetMouseY() >= main.y - button_height / 2) {
+		CP_Image_Draw(main_img2, main.x, main.y, button_width, button_height, 255);
+	}
 
-	CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));
-	CP_Settings_TextSize(50);
-	CP_Font_DrawText("Game Paused", width / 2.0f, height / 3.0f);
+	CP_Settings_Fill(fontcolor);
+	CP_Settings_TextSize(100);
+	CP_Font_DrawText("Game Paused", width / 2.0f, height / 4.0f);
 
 	if(CP_Input_KeyDown(KEY_R))return 0;
-
+	
 	if (CP_Input_MouseClicked() ) {
-		if (IsAreaClicked(resume.x, resume.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) ) {
+		if (IsAreaClicked(resume.x, resume.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())  ==1 ) {
 			printf("Resume\t");
 			return 0;
 		}
-		if (IsAreaClicked(main.x, main.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(main.x, main.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) ==1) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			printf("Main menu");
 		}
@@ -103,7 +118,10 @@ void endgamescreen(float endscore, char* endgamestate) {
 
 	quit_img = CP_Image_Load("Assets/exitbutton.png");
 	main_img = CP_Image_Load("Assets/menubutton.png");
-	background = CP_Image_Load("Assets/bg.png");
+	quit_img2 = CP_Image_Load("Assets/exitbutton2.png");
+	main_img2 = CP_Image_Load("Assets/menubutton2.png");
+
+	backscreen = CP_Image_Load("Assets/backscreen2.png");
 	//CP_Settings_ImageMode(CP_POSITION_CENTER);
 	//CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 
@@ -112,12 +130,25 @@ void endgamescreen(float endscore, char* endgamestate) {
 	/*drawbutton(resume.x, resume.y, resume.text);
 	drawbutton(main.x, main.y, main.text);*/
 
-	CP_Image_Draw(background, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
+	CP_Image_Draw(backscreen, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
 	CP_Image_Draw(quit_img, mode.x, mode.y, button_width, button_height, 255);
 	CP_Image_Draw(main_img, main.x, main.y, button_width, button_height, 255);
 
-	CP_Settings_Fill(CP_Color_Create(240, 128, 128, 255));
-	CP_Settings_TextSize(50);
+	if (CP_Input_GetMouseX() >= mode.x - button_width / 2 &&
+		CP_Input_GetMouseX() <= mode.x + button_width / 2 &&
+		CP_Input_GetMouseY() <= mode.y + button_height / 2 &&
+		CP_Input_GetMouseY() >= mode.y - button_height / 2) {
+		CP_Image_Draw(quit_img2, mode.x, mode.y, button_width, button_height, 255);
+	}
+	if (CP_Input_GetMouseX() >= main.x - button_width / 2 &&
+		CP_Input_GetMouseX() <= main.x + button_width / 2 &&
+		CP_Input_GetMouseY() <= main.y + button_height / 2 &&
+		CP_Input_GetMouseY() >= main.y - button_height / 2) {
+		CP_Image_Draw(main_img2, main.x, main.y, button_width, button_height, 255);
+	}
+
+	CP_Settings_Fill(fontcolor);
+	CP_Settings_TextSize(100);
 	char scoretext[10000] = { 0 };
 
 	if (endgamestate == "LOSE") {
@@ -129,11 +160,10 @@ void endgamescreen(float endscore, char* endgamestate) {
 	}
 
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+	CP_Font_DrawTextBox(scoretext, 0, height /4, width);
 
-	CP_Font_DrawTextBox(scoretext, get_center_hor(), get_center_ver(),width/3);
-
-	FILE* fp = fopen("Assets/highscore.txt", "a");
-	fprintf(fp, "%.0f", endscore);
+	//FILE* fp = fopen("Assets/highscore.txt", "a");
+	//fprintf(fp, "%.0f", endscore);
 	//errno_t err;
 	//if (err = fopen(&fp, "Assets/highscore.txt", "a") != 0) {
 	//	printf("%s", "haha");
@@ -150,13 +180,12 @@ void endgamescreen(float endscore, char* endgamestate) {
 
 
 	if (CP_Input_MouseClicked()) {
-		if (IsAreaClicked(mode.x, mode.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(mode.x, mode.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) ==1) {
 			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
 		}
-		if (IsAreaClicked(main.x, main.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(main.x, main.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())== 1) {
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
-
 	}
 }
 
@@ -168,7 +197,7 @@ void drawclown(float x, float y, float dia, int trans, bool fake, bool super) {
 	else mos = CP_Image_Load("./Assets/ladybug.png");
 
 	if (super) mos = CP_Image_Load("./Assets/cock.png");
-
+	CP_Settings_ImageFilterMode(CP_IMAGE_FILTER_LINEAR);
 	CP_Image_Draw(mos, x, y, dia, dia, trans);
 }
 

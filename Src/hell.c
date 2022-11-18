@@ -10,8 +10,8 @@ int super_time;
 // game core functions
 void hell_init(void)
 {
-	//CP_System_Fullscreen();
-	CP_System_SetWindowSize(1280, 720);
+	CP_System_Fullscreen();
+	//CP_System_SetWindowSize(1280, 720);
 	CP_System_SetFrameRate(60);
 	for (int i = 0; i < SIZE; i++) {
 		super_time = CP_Random_RangeInt(0, 29);
@@ -51,7 +51,9 @@ void hell_update(void)
 	if (game.isPaused == 0) {
 		if (CP_Input_KeyDown(KEY_P)) game.isPaused = 1;
 
-		CP_Graphics_ClearBackground(bg_gray);
+		CP_Graphics_ClearBackground(white);
+		CP_Image_Draw(background, width / 2, height / 2, width, height, 155);
+
 		float currentElapsedTime = CP_System_GetDt();
 		game.totalElapsedTime += currentElapsedTime;
 
@@ -60,7 +62,7 @@ void hell_update(void)
 		if (0 <= game.totalElapsedTime && game.totalElapsedTime <= 3) {
 			for (int i = 0; i <= game.totalElapsedTime; i++) {
 				float count = 3 - (float)game.totalElapsedTime;
-				CP_Settings_Fill(black);
+				CP_Settings_Fill(fontcolor);
 				CP_Settings_TextSize(100);
 				char countdown[50] = { 0 };
 				sprintf_s(countdown, _countof(countdown), "Game starting in %.0f...", count--);
@@ -160,6 +162,8 @@ void hell_update(void)
 			if (die) game.life -= 1;
 			if (!game.life) endgamescreen(game.score, "LOSE");
 
+			//if kill 2 bugs with 1 click
+			if (game.accuracy > 100)game.total_clicks--;
 			// handle accuracy
 			game.accuracy = game.total_clicks > 0 ? ((float)game.total_killed / (float)game.total_clicks) * 100.0f : 0;
 
