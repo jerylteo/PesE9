@@ -116,9 +116,9 @@ void endgamescreen(float endscore, char* endgamestate) {
 	mode = (button){ width / 3.0f, height / 3.0f * 2 };
 	main = (button){ width / 3.0f * 2, height / 3.0f * 2 };
 
-	quit_img = CP_Image_Load("Assets/exitbutton.png");
+	back_img = CP_Image_Load("Assets/backbutton.png");
 	main_img = CP_Image_Load("Assets/menubutton.png");
-	quit_img2 = CP_Image_Load("Assets/exitbutton2.png");
+	back_img2 = CP_Image_Load("Assets/backbutton2.png");
 	main_img2 = CP_Image_Load("Assets/menubutton2.png");
 
 	backscreen = CP_Image_Load("Assets/backscreen2.png");
@@ -131,14 +131,14 @@ void endgamescreen(float endscore, char* endgamestate) {
 	drawbutton(main.x, main.y, main.text);*/
 
 	CP_Image_Draw(backscreen, width / 2.0f, height / 2.0f, width / 5.0f * 4.0f, height / 5.0f * 4.0f, 255);
-	CP_Image_Draw(quit_img, mode.x, mode.y, button_width, button_height, 255);
+	CP_Image_Draw(back_img, mode.x, mode.y, button_width, button_height, 255);
 	CP_Image_Draw(main_img, main.x, main.y, button_width, button_height, 255);
 
 	if (CP_Input_GetMouseX() >= mode.x - button_width / 2 &&
 		CP_Input_GetMouseX() <= mode.x + button_width / 2 &&
 		CP_Input_GetMouseY() <= mode.y + button_height / 2 &&
 		CP_Input_GetMouseY() >= mode.y - button_height / 2) {
-		CP_Image_Draw(quit_img2, mode.x, mode.y, button_width, button_height, 255);
+		CP_Image_Draw(back_img2, mode.x, mode.y, button_width, button_height, 255);
 	}
 	if (CP_Input_GetMouseX() >= main.x - button_width / 2 &&
 		CP_Input_GetMouseX() <= main.x + button_width / 2 &&
@@ -204,3 +204,21 @@ void drawclown(float x, float y, float dia, int trans, bool fake, bool super) {
 //void drawbutton(float x, float y, CP_Image buttonimage) {
 //	CP_Settings_Fill(CP_Color_Create(150, 200, 200, 255));
 //}
+
+void changecursor(float x,float y) {
+	int cursorangle;
+	CP_System_ShowCursor(FALSE);
+	
+	CP_POSITION_MODE CP_POSITION_CORNER;
+	if (CP_Input_MouseDown(MOUSE_BUTTON_1) == 1) {
+		cursor = CP_Image_Load("./Assets/splat2.png");
+		cursorangle = 0;
+	}
+	else {
+		cursor = CP_Image_Load("./Assets/splat.png");
+		cursorangle = 335;
+	}
+		CP_Image_DrawAdvanced(cursor, x, y, width / 12, height / 5, 255, cursorangle);
+	
+
+}

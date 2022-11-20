@@ -77,7 +77,7 @@ void Mode_Update()
 		CP_Image_Draw(back_img2, back.x, back.y, button_width, button_height, 255);
 	}
 
-	if (CP_Input_MouseClicked())
+	if (CP_Input_MouseReleased(MOUSE_BUTTON_1))
 	{	//"NORMAL" button is clicked
 		if (IsAreaClicked(normal.x, normal.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameStateForced(normal_init, normal_update, normal_exit);

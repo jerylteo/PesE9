@@ -39,6 +39,8 @@ void normal_init(void){
 	game.total_killed = 0;
 	game.accuracy = 0;
 	game.score = 0;
+	death = CP_Image_Load("Assets/death3.png");
+
 }
 
 void normal_update(void)
@@ -84,6 +86,10 @@ void normal_update(void)
 				if (game.clown_arr[i].state == ACTIVE) {
 					game.clown_arr[i].time_up += currentElapsedTime;
 				}
+				//if (game.clown_arr[i].state == KILLED && ((i + 4) < game.totalElapsedTime)) {
+				//	CP_Image_Draw(death, game.clown_arr[i].x, game.clown_arr[i].y, diameter, diameter, 255 - );
+				//}
+
 			}
 			if (CP_Input_MouseClicked()) {
 				game.total_clicks += 1;
@@ -104,6 +110,7 @@ void normal_update(void)
 						//printf("Clicked\t");
 					}
 				}
+
 			}
 			//if kill 2 bugs with 1 click
 			if (game.accuracy > 100)game.total_clicks--;
@@ -112,21 +119,21 @@ void normal_update(void)
 
 			// print timer
 			CP_Settings_Fill(fontcolor);
-			CP_Settings_TextSize(50);
+			CP_Settings_TextSize(90);
 
 			char time[100] = { 0 };
-			sprintf_s(time, _countof(time), "Timer : %.0f | Accuracy: %.1f | Score: %.0f | Life: %d/5", (10 - idx), game.accuracy, game.score, game.life);
+			sprintf_s(time, _countof(time), "Timer : %.0f | Accuracy: %.1f | Score: %.0f ", (10 - idx), game.accuracy, game.score);
 			CP_Font_DrawText(time, get_center_hor(), 50);
 			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 
 		}
 
 		else {
-			endgamescreen(game.score,"END");
-
+			endgamescreen(game.score, "END");
 		}
-	}
 
+	}
+	//changecursor(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	if (CP_Input_KeyDown(KEY_ESCAPE))
 	{
 		CP_Engine_Terminate();
@@ -136,5 +143,7 @@ void normal_update(void)
 
 void normal_exit(void)
 {
+	CP_System_ShowCursor(TRUE);
+
 	//CP_Engine_SetNextGameStateForced(normal_init, normal_update, normal_exit);
 }

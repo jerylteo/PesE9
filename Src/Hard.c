@@ -43,7 +43,7 @@ void hard_init(void)
 void hard_update(void)
 {		
 	CP_Image_Draw(background, width / 2, height / 2, width, height, 200);
-	if (CP_Input_KeyTriggered(KEY_P)) {
+	if (CP_Input_KeyDown(KEY_P)) {
 		game.isPaused = 1;	
 	}
 	else if (game.isPaused == 1) {

@@ -8,7 +8,7 @@
 #include <errno.h>
 
 
-
+CP_Image cursor,death, htpscreen_img, creditscreen_img;
 CP_Image title, background, mos, backscreen;
 CP_Image start_img, htp_img, credits_img, quit_img, start_img2, htp_img2, credits_img2, quit_img2;
 CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img, normal_img2, hard_img2, hell_img2, back_img2, resume_img2, main_img2;
@@ -32,6 +32,7 @@ int backgroundtrans;
 
 float get_center_hor(void);
 float get_center_ver(void);
+void changecursor(float x, float y);
 
 typedef enum {
 	KILLED,
@@ -97,7 +98,7 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 
 void drawclown(float x, float y, float diameter,int trans, bool fake, bool super);
 
-void drawbutton(float x, float y, char* text);
+//void drawbutton(float x, float y, char* text);
 
 union CP_Vector AngleToVector(float radian_angle);
 
@@ -134,5 +135,15 @@ void Main_Menu_Exit(void);
 void splash_screen_init(void);
 void splash_screen_update(void);
 void splash_screen_exit(void);
+
+//htp
+void htp_init(void);
+void htp_update(void);
+void htp_exit(void);
+
+//credits
+void credits_init(void);
+void credits_update(void);
+void credits_exit(void);
 
 #endif
