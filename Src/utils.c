@@ -152,7 +152,7 @@ void endgamescreen(float endscore, float accuracy, char* endgamestate) {
 	char scoretext[10000] = { 0 };
 
 	if (endgamestate == "LOSE") {
-		sprintf_s(scoretext, _countof(scoretext), "You ran out of lives!\nScore : %.0f", endscore);
+		sprintf_s(scoretext, _countof(scoretext), "You ran out of lives!\nAccuracy : %.2f%%\nScore : %.0f", endscore);
 	}
 	else {
 		sprintf_s(scoretext, _countof(scoretext), "Time's Up!\nAccuracy : %.2f%%\nScore : %.0f",accuracy, endscore);
