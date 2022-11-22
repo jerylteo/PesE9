@@ -1,7 +1,27 @@
-﻿  utils.c
-C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\PES E9 git\PesE9\Src\utils.c(56,10): warning C4013: 'printf' undefined; assuming extern returning int
-C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\PES E9 git\PesE9\Src\utils.c(67): warning C4715: 'Pausescreen': not all control paths return a value
-  Setup.vcxproj -> C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\PES E9 git\PesE9\bin\Debug-x64\Setup.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\.tmp\Debug-x64\) contains files shared from another project (Setup.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Hard.c
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(59,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(59,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(59,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(59,64): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(81,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(95,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(123,93): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(123,94): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(181,69): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(181,77): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(193,68): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\Hard.c(193,76): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  normal.c
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(49,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(49,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(49,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(49,64): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(69,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(80,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\Src\normal.c(63,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  Setup.vcxproj -> C:\Users\henor\OneDrive\Desktop\SIT STUFF\Projects\New PESE9\PesE9\bin\Debug-x64\PEST ZERO.exe
   1 File(s) copied
   1 File(s) copied
-  1 File(s) copied
+  42 File(s) copied

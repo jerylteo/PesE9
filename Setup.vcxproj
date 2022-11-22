@@ -24,6 +24,7 @@
     <ProjectGuid>{124e256f-a54e-4d41-afb0-23db890d2d0e}</ProjectGuid>
     <RootNamespace>Setup</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>PEST ZERO</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -71,13 +72,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Extern\CProcessing\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Extern\CProcessing\inc;$(SolutionDir)inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\CProcessing\lib\x64;</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Extern\CProcessing\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Extern\CProcessing\inc;$(SolutionDir)inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\CProcessing\lib\x64;</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -155,8 +156,10 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\credits.c" />
     <ClCompile Include="Src\Hard.c" />
     <ClCompile Include="Src\hell.c" />
+    <ClCompile Include="Src\htp.c" />
     <ClCompile Include="Src\main.c" />
     <ClCompile Include="Src\mainmenu.c" />
     <ClCompile Include="Src\mode.c" />
@@ -165,11 +168,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="Src\utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Hard.h" />
-    <ClInclude Include="Src\mainmenu.h" />
-    <ClInclude Include="Src\mode.h" />
-    <ClInclude Include="Src\splashscreen.h" />
-    <ClInclude Include="Src\utils.h" />
+    <ClInclude Include="Inc\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

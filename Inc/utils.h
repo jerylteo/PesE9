@@ -8,7 +8,7 @@
 #include <errno.h>
 
 
-CP_Image cursor,death, htpscreen_img, creditscreen_img;
+CP_Image cursor,death, htpscreen_img, creditscreen_img, heart;
 CP_Image title, background, mos, backscreen;
 CP_Image start_img, htp_img, credits_img, quit_img, start_img2, htp_img2, credits_img2, quit_img2;
 CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img, normal_img2, hard_img2, hell_img2, back_img2, resume_img2, main_img2;
@@ -23,9 +23,13 @@ CP_Image normal_img,hard_img,hell_img,back_img, resume_img, main_img, normal_img
 #define width CP_System_GetWindowWidth()
 #define height CP_System_GetWindowHeight()
 
+#define game_timer 20.0f
+
 // colours
 #define black CP_Color_Create(0, 0, 0, 255)
 #define white CP_Color_Create(255, 255, 255, 255)
+#define grey CP_Color_Create(155, 155, 155, 155)
+#define dead CP_Color_Create(255, 0, 0, 155)
 #define fontcolor CP_Color_Create(160, 82, 45, 255)
 
 int backgroundtrans;
@@ -79,8 +83,8 @@ typedef struct{
 typedef struct {
 	int isPaused;
 	float totalElapsedTime;
-	CLOWN clown_arr[100];
-	movingclown movingclown_arr[100];
+	CLOWN clown_arr[100],movingclown_arr[100];
+	//movingclown movingclown_arr[100];
 	float center_hor;
 	float center_ver;
 	int speed;
@@ -90,6 +94,8 @@ typedef struct {
 	int life;
 	float score;
 	int miss;
+	bool bounce;
+	bool movingbounce;
 } GAME;
 
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);
@@ -104,7 +110,7 @@ union CP_Vector AngleToVector(float radian_angle);
 
 int Pausescreen(void);
 
-void endgamescreen(float endscore,char* endgamesate);
+void endgamescreen(float endscore, float accuracy, char* endgamesate);
 
 //normal mode
 void normal_init(void);

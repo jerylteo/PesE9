@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#define diameter CP_System_GetWindowHeight()/8.0f
 #define size 100
+#define diameter CP_System_GetWindowHeight()/8.0f
 
 GAME game;
 
@@ -23,7 +23,7 @@ void normal_init(void){
 			ACTIVE,
 			0,
 			0,
-			TRUE,
+			FALSE,
 			TRUE
 		};
 		game.clown_arr[i].time_up = 0;
@@ -39,6 +39,7 @@ void normal_init(void){
 	game.total_killed = 0;
 	game.accuracy = 0;
 	game.score = 0;
+
 	death = CP_Image_Load("Assets/death3.png");
 
 }
@@ -59,6 +60,7 @@ void normal_update(void)
 		float currentElapsedTime = CP_System_GetDt();
 		game.totalElapsedTime += currentElapsedTime;
 		//printf("%f\n",game.totalElapsedTime);
+		float idx = (game.totalElapsedTime - 3.0f)/1.5;
 
 		if (game.totalElapsedTime <= 3 && game.totalElapsedTime >= 0) {
 			for (int i = 0; i <= game.totalElapsedTime; i++) {
@@ -71,8 +73,17 @@ void normal_update(void)
 				CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 			}
 		}
-		else if (game.totalElapsedTime <= 13 && game.totalElapsedTime >= 3) {
-			float idx = game.totalElapsedTime - 3;
+		else if (3 <= game.totalElapsedTime && idx <= game_timer) {
+			game.totalElapsedTime += (currentElapsedTime/2);
+			//last 5 seconds timer
+			if ((game_timer - idx) <= 5) {
+				CP_Settings_TextSize(height / 2);
+				CP_Settings_Fill(grey);
+				CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+				char fiveseconds[100] = { 0 };
+				sprintf_s(fiveseconds, _countof(fiveseconds), "%.1f", (game_timer - idx));
+				CP_Font_DrawText(fiveseconds, get_center_hor(), get_center_ver());
+			}
 			for (int i = 0; i + 3 < game.totalElapsedTime; i++) {
 
 				drawclown(
@@ -80,7 +91,7 @@ void normal_update(void)
 					game.clown_arr[i].y,
 					diameter,
 					game.clown_arr[i].trans,
-					FALSE,
+					game.clown_arr[i].fake,
 					FALSE
 				);
 				if (game.clown_arr[i].state == ACTIVE) {
@@ -91,10 +102,10 @@ void normal_update(void)
 				//}
 
 			}
-			if (CP_Input_MouseClicked()) {
+			if (CP_Input_MouseTriggered(MOUSE_BUTTON_1)) {
 				game.total_clicks += 1;
 				printf("click %d\n", game.total_clicks);
-				for (int i = 0; i < idx; i++) {
+				for (int i = 0; i < game.totalElapsedTime; i++) {
 					if (IsCircleClicked(
 						game.clown_arr[i].x,
 						game.clown_arr[i].y,
@@ -113,7 +124,7 @@ void normal_update(void)
 
 			}
 			//if kill 2 bugs with 1 click
-			if (game.accuracy > 100)game.total_clicks--;
+			if (game.accuracy > 100) game.total_clicks++;
 			//calculate accuracy
 			game.accuracy = game.total_clicks > 0 ? ((float)game.total_killed / (float)game.total_clicks) * 100.0f : 0;
 
@@ -122,22 +133,19 @@ void normal_update(void)
 			CP_Settings_TextSize(90);
 
 			char time[100] = { 0 };
-			sprintf_s(time, _countof(time), "Timer : %.0f | Accuracy: %.1f | Score: %.0f ", (10 - idx), game.accuracy, game.score);
-			CP_Font_DrawText(time, get_center_hor(), 50);
+			sprintf_s(time, _countof(time), "Timer : %.0f | Accuracy: %.1f%% | Score: %.0f ", (game_timer - idx), game.accuracy, game.score);
 			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			CP_Font_DrawText(time, get_center_hor(), 50);
+
 
 		}
 
 		else {
-			endgamescreen(game.score, "END");
+			endgamescreen(game.score,game.accuracy, "END");
 		}
 
 	}
 	//changecursor(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-	if (CP_Input_KeyDown(KEY_ESCAPE))
-	{
-		CP_Engine_Terminate();
-	}
 
 }
 

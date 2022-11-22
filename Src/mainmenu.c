@@ -19,8 +19,8 @@ GAME game;
 button play, htp, credits, quit,CURSOR;
 
 void Main_Menu_Init()
-{
-	//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+{	
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	//window size
 	CP_System_Fullscreen();
 	//CP_System_SetWindowSize(1270, 800);
@@ -43,8 +43,6 @@ void Main_Menu_Init()
 
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-
-	game.isPaused = 0;
 
 }
 

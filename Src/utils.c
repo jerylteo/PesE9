@@ -110,7 +110,7 @@ int Pausescreen(void) {
 	}
 }
 
-void endgamescreen(float endscore, char* endgamestate) {
+void endgamescreen(float endscore, float accuracy, char* endgamestate) {
 	button mode, main;
 
 	mode = (button){ width / 3.0f, height / 3.0f * 2 };
@@ -155,7 +155,7 @@ void endgamescreen(float endscore, char* endgamestate) {
 		sprintf_s(scoretext, _countof(scoretext), "You ran out of lives!\nScore : %.0f", endscore);
 	}
 	else {
-		sprintf_s(scoretext, _countof(scoretext), "Game Ended\nScore : %.0f", endscore);
+		sprintf_s(scoretext, _countof(scoretext), "Time's Up!\nAccuracy : %.2f%%\nScore : %.0f",accuracy, endscore);
 
 	}
 
@@ -193,8 +193,8 @@ void drawclown(float x, float y, float dia, int trans, bool fake, bool super) {
 	CP_Settings_Fill(CP_Color_Create(138, 43, 226, 0));
 	CP_Settings_NoStroke();
 	CP_Graphics_DrawCircle(x, y, dia);
-	if (!fake) mos = CP_Image_Load("./Assets/mozz.PNG");
-	else mos = CP_Image_Load("./Assets/ladybug.png");
+	if (fake) mos = CP_Image_Load("./Assets/ladybug.PNG");
+	else mos = CP_Image_Load("./Assets/mozz.png");
 
 	if (super) mos = CP_Image_Load("./Assets/cock.png");
 	CP_Settings_ImageFilterMode(CP_IMAGE_FILTER_LINEAR);

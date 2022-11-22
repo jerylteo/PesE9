@@ -34,6 +34,7 @@ void Mode_Init()
 	hard_img2 = CP_Image_Load("Assets/hardbutton2.png");
 	hell_img2 = CP_Image_Load("Assets/hellbutton2.png");
 	back_img2 = CP_Image_Load("Assets/backbutton2.png");
+	heart = CP_Image_Load("Assets/heart1.png");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 }
