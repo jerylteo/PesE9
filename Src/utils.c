@@ -2,7 +2,7 @@
 #include "utils.h"
 #include <math.h>
 
-
+FILE* fp;
 
 // helper functions
 float get_center_hor(void) {
@@ -147,12 +147,28 @@ void endgamescreen(float endscore, float accuracy, char* endgamestate) {
 		CP_Image_Draw(main_img2, main.x, main.y, button_width, button_height, 255);
 	}
 
+	// write HERE will not work since infinite loop until button click.
+	//errno_t err;
+
+	//if (err = fopen_s(&fp, "Assets/highscore.txt", "a") == 0) {
+	//	fprintf(fp, "Score: %.0f | Accuracy: %.2f%%\n", endscore, accuracy);
+	//}
+
+	//if (fp) err = fclose(fp);
+
+	//if (err = fopen_s(&fp, "Assets/highscore.txt", "r") == 0) {
+	//	endscore = 9999;
+	//}
+
+	//if (fp) err = fclose(fp);
+
+
 	CP_Settings_Fill(fontcolor);
 	CP_Settings_TextSize(100);
 	char scoretext[10000] = { 0 };
 
 	if (endgamestate == "LOSE") {
-		sprintf_s(scoretext, _countof(scoretext), "You ran out of lives!\nAccuracy : %.2f%%\nScore : %.0f", endscore);
+		sprintf_s(scoretext, _countof(scoretext), "You ran out of lives!\nAccuracy : %.2f%%\nScore : %.0f", accuracy, endscore);
 	}
 	else {
 		sprintf_s(scoretext, _countof(scoretext), "Time's Up!\nAccuracy : %.2f%%\nScore : %.0f",accuracy, endscore);
@@ -161,6 +177,8 @@ void endgamescreen(float endscore, float accuracy, char* endgamestate) {
 
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 	CP_Font_DrawTextBox(scoretext, 0, height /4, width);
+
+
 
 	//FILE* fp = fopen("Assets/highscore.txt", "a");
 	//fprintf(fp, "%.0f", endscore);
@@ -180,6 +198,15 @@ void endgamescreen(float endscore, float accuracy, char* endgamestate) {
 
 
 	if (CP_Input_MouseClicked()) {
+		// So write highscore only here.
+		errno_t err;
+
+		if (err = fopen_s(&fp, "Assets/highscore.txt", "a") == 0) {
+			fprintf(fp, "Score: %.0f | Accuracy: %.2f%%\n", endscore, accuracy);
+		}
+
+		if (fp) err = fclose(fp);
+
 		if (IsAreaClicked(mode.x, mode.y, button_width, button_height, CP_Input_GetMouseX(), CP_Input_GetMouseY()) ==1) {
 			CP_Engine_SetNextGameState(Mode_Init, Mode_Update, Mode_Exit);
 		}
